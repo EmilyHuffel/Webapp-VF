@@ -40,11 +40,17 @@ data = load_data()
 
 # Filter Data on Date
 data["review_day"] = data["review_day"].dt.date
-date_min, date_max = st.slider()
-date_min = st.date_input(label="earliest included date", value=datetime.date(2022, 1, 1))
-date_max = st.date_input(label="last included date", value=datetime.date(2022, 12, 31)) + datetime.timedelta(
-    days=1
+date_min, date_max = st.slider(
+    label="Included date range",
+    min_value=datetime.date(2022, 1, 1),
+    max_value=datetime.date(2023, 1, 1),
+    value=(datetime.date(2022, 1, 1), datetime.date(2023, 1, 1)),
+    step=datetime.timedelta(days=1),
 )
+# date_min = st.date_input(label="earliest included date", value=datetime.date(2022, 1, 1))
+# date_max = st.date_input(label="last included date", value=datetime.date(2022, 12, 31)) + datetime.timedelta(
+# days=1
+# )
 
 filtered_data = data[(data["review_day"] >= date_min) & (data["review_day"] < date_max)]
 
